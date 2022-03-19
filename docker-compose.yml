@@ -21,6 +21,13 @@ services:
     volumes:
     - ./data_link/postgres_db:/var/lib/postgresql/data
 
+  scraper:
+    container_name: scraper
+    env_file:
+    - env/scraper.env
+    image: fiitteam8/news_scraper
+    ports:
+    - 6800:6800
   
   setup:
     container_name: es_setup
@@ -252,5 +259,6 @@ services:
       retries: 120
     env_file:
     - env/elastic.env
+    
 
 
