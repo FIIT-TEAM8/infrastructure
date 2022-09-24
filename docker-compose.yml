@@ -10,6 +10,7 @@ services:
     - 27017:27017
     volumes:
     - ./data_link/mongo_db:/data/db
+    restart: unless-stopped
 
   postgres_db:
     container_name: postgres_db
@@ -20,6 +21,7 @@ services:
     - 5432:5432
     volumes:
     - ./data_link/postgres_db:/var/lib/postgresql/data
+    restart: unless-stopped
 
   scraper:
     container_name: scraper
@@ -29,6 +31,7 @@ services:
     ports:
     - 6800:6800
     mem_limit: 4294967296
+    restart: unless-stopped
   
   setup:
     container_name: es_setup
@@ -140,6 +143,7 @@ services:
       retries: 120
     env_file:
     - env/elastic.env
+    restart: unless-stopped
 
   es02:
     container_name: es02
@@ -183,6 +187,7 @@ services:
       retries: 120
     env_file:
     - env/elastic.env
+    restart: unless-stopped
 
   es03:
     container_name: es03
@@ -226,6 +231,7 @@ services:
       retries: 120
     env_file:
     - env/elastic.env
+    restart: unless-stopped
 
   kibana:
     container_name: kibana
@@ -260,6 +266,7 @@ services:
       retries: 120
     env_file:
     - env/kibana.env
+    restart: unless-stopped
     
 
 
@@ -270,6 +277,7 @@ services:
       - ./data_link/certbot/www:/var/www/certbot
     # command to keep issuing new SSL certificats
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    restart: unless-stopped
 
   nginx:
     image: nginx:1.21.3
@@ -291,6 +299,7 @@ services:
     ports:
       - 80:80
       - 443:443
+    restart: unless-stopped
 
   mongo_express:
     image: mongo-express
@@ -311,6 +320,7 @@ services:
       - env/elastic_connection.env
     ports:
       - 5000:5000
+    restart: unless-stopped
   
   node_server:
     image: fiitteam8/node_server:latest
@@ -321,15 +331,18 @@ services:
       - 8080:8080
     env_file:
       - env/node.env
+    restart: unless-stopped
 
   scraping_scheduler:
     image: fiitteam8/scraping_scheduler
     container_name: scraping_scheduler
     env_file:
       - env/scraping_scheduler.env
+    restart: unless-stopped
 
   documentation:
     container_name: documentation
     image: fiitteam8/ams_team_documentation:latest
     ports:
       - 8888:8888
+    restart: unless-stopped
