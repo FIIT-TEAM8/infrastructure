@@ -321,6 +321,17 @@ services:
     ports:
       - 5000:5000
     restart: unless-stopped
+
+  system_metrics:
+    image: fiitteam8/system_metrics:latest
+    container_name: system_metrics
+    env_file:
+      - env/system_metrics.env
+      - env/mongo_connection.env
+      - env/elastic_connection.env
+    ports:
+      - 5005:5005
+    restart: unless-stopped
   
   node_server:
     image: fiitteam8/node_server:latest
