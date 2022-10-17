@@ -280,8 +280,8 @@ services:
     restart: unless-stopped
 
   nginx:
-    # image: nginx:1.21.3
-    image: fiitteam8/nginx_amplify:latest
+    image: nginx:1.21.3
+    # image: fiitteam8/nginx_amplify:latest
     container_name: nginx
     restart: always
     depends_on:
