@@ -280,8 +280,8 @@ services:
     restart: unless-stopped
 
   nginx:
-    image: nginx:1.21.3
-    # image: fiitteam8/nginx_amplify:latest
+    # image: nginx:1.21.3
+    image: fiitteam8/nginx_amplify:latest
     container_name: nginx
     restart: always
     depends_on:
@@ -297,10 +297,11 @@ services:
     # reload nginx based on config
     # keep reloading nginx every 6h to acquire new ssl certificates
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-      #- "-e API_KEY=68f97a3e2db448294161d2ad545589a8 -e AMPLIFY_IMAGENAME=main_nginx"
     ports:
       - 80:80
       - 443:443
+    env_file:
+      - env/nginx_amplify.env
     restart: unless-stopped
 
   mongo_express:
