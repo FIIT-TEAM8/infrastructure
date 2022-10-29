@@ -358,5 +358,5 @@ services:
     container_name: documentation
     image: fiitteam8/ams_team_documentation:latest
     ports:
-      - 8888:8888
+      - 9000:9000
     restart: unless-stopped
