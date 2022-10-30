@@ -33,6 +33,46 @@ services:
     restart: always
   multitool:
     image: praqma/network-multitool
+  tor-6:
+    container_name: 'tor-6'
+    image: 'pickapp/tor-proxy:latest'
+    environment:
+      - IP_CHANGE_SECONDS=15
+    restart: always
+  multitool:
+    image: praqma/network-multitool
+  tor-7:
+    container_name: 'tor-7'
+    image: 'pickapp/tor-proxy:latest'
+    environment:
+      - IP_CHANGE_SECONDS=15
+    restart: always
+  multitool:
+    image: praqma/network-multitool
+  tor-8:
+    container_name: 'tor-8'
+    image: 'pickapp/tor-proxy:latest'
+    environment:
+      - IP_CHANGE_SECONDS=15
+    restart: always
+  multitool:
+    image: praqma/network-multitool
+  tor-9:
+    container_name: 'tor-9'
+    image: 'pickapp/tor-proxy:latest'
+    environment:
+      - IP_CHANGE_SECONDS=15
+    restart: always
+  multitool:
+    image: praqma/network-multitool
+  tor-10:
+    container_name: 'tor-10'
+    image: 'pickapp/tor-proxy:latest'
+    environment:
+      - IP_CHANGE_SECONDS=15
+    restart: always
+  multitool:
+    image: praqma/network-multitool
 
 networks:
   default:
