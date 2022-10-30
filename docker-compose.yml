@@ -347,6 +347,13 @@ services:
       - env/node.env
     restart: unless-stopped
 
+  frontend:
+    image: fiitteam8/frontend:latest
+    container_name: frontend
+    hostname: frontend
+    env_file:
+      - env/frontend.env
+
   scraping_scheduler:
     image: fiitteam8/scraping_scheduler
     container_name: scraping_scheduler
