@@ -360,3 +360,7 @@ services:
     ports:
       - 9000:9000
     restart: unless-stopped
+
+networks:
+  default:
+      name: adversea
