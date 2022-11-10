@@ -312,7 +312,13 @@ services:
       - 8081:8081
     env_file:
       - env/mongo_express.env
-
+ 
+  stats_server:
+    image: fiitteam8/stats_server:latest
+    container_name: stats_server
+    env_file:
+      - env/elastic_connection.env
+    restart: unless-stopped
 
   flask_server:
     image: fiitteam8/flask_server:latest
