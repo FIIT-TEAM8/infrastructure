@@ -95,11 +95,13 @@ services:
     volumes:
       - ./data_link/elastic/certs:/usr/share/elasticsearch/config/certs
       - ./data_link/elastic/es01:/usr/share/elasticsearch/data
+      - ./data_link/elastic/backup:/opt/elasticsearch/backup  
     ports:
       - 9200:9200
     environment:
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
+      - path.repo=/opt/elasticsearch/backup  
       - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es02,es03
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -142,9 +144,11 @@ services:
     volumes:
       - ./data_link/elastic/certs:/usr/share/elasticsearch/config/certs
       - ./data_link/elastic/es02:/usr/share/elasticsearch/data
+      - ./data_link/elastic/backup:/opt/elasticsearch/backup
     environment:
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
+      - path.repo=/opt/elasticsearch/backup
       - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es01,es03
       - bootstrap.memory_lock=true
@@ -186,9 +190,11 @@ services:
     volumes:
       - ./data_link/elastic/certs:/usr/share/elasticsearch/config/certs
       - ./data_link/elastic/es03:/usr/share/elasticsearch/data
+      - ./data_link/elastic/backup:/opt/elasticsearch/backup
     environment:
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
+      - path.repo=/opt/elasticsearch/backup
       - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es01,es02
       - bootstrap.memory_lock=true
@@ -281,7 +287,7 @@ services:
       - ./data_link/certbot/conf:/etc/letsencrypt
       - ./data_link/certbot/www:/var/www/certbot
       - ./data_link/nginx-static:/usr/share/nginx/html
-      - ./data_link/nginx-auth/.htpasswd:/etc/apache2/.htpasswd
+      - ./data_link/nginx-auth/htpasswd:/etc/apache2/.htpasswd
     # reload nginx based on config
     # keep reloading nginx every 6h to acquire new ssl certificates
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -336,6 +342,7 @@ services:
     hostname: frontend
     env_file:
       - env/frontend.env
+    restart: unless-stopped
 
   scraping_scheduler:
     image: fiitteam8/scraping_scheduler
