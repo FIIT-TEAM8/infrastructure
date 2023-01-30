@@ -11,6 +11,10 @@ services:
     volumes:
     - ./data_link/mongo_db:/data/db
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 5g
 
   scraper:
     container_name: scraper
