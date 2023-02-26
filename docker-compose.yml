@@ -101,6 +101,7 @@ services:
       - ./data_link/elastic/es01:/usr/share/elasticsearch/data
       - ./data_link/elastic/backup:/opt/elasticsearch/backup  
       - ./data_link/elastic/backup:/usr/share/elasticsearch/snapshot
+      - ./data_link/elastic/repositories:/usr/share/elasticsearch/config/repositories
     ports:
       - 9200:9200
     environment:
