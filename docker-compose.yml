@@ -6,8 +6,8 @@ services:
     env_file:
     - env/mongo_db.env
     image: fiitteam8/mongo_db
-    ports:
-    - 27017:27017
+    #ports:
+    #- 27017:27017
     volumes:
     - ./data_link/mongo_db:/data/db
     restart: unless-stopped
@@ -21,8 +21,8 @@ services:
     env_file:
     - env/scraper.env
     image: fiitteam8/news_scraper
-    ports:
-    - 6800:6800
+    #ports:
+    #- 6800:6800
     mem_limit: 4294967296
     restart: unless-stopped
   
@@ -100,8 +100,8 @@ services:
       - ./data_link/elastic/certs:/usr/share/elasticsearch/config/certs
       - ./data_link/elastic/es01:/usr/share/elasticsearch/data
       - ./data_link/elastic/backup:/opt/elasticsearch/backup  
-    ports:
-      - 9200:9200
+    #ports:
+    #  - 9200:9200
     environment:
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
@@ -278,38 +278,38 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     restart: unless-stopped
 
-  nginx:
-    image: nginx:1.21.3
+    #nginx:
+    #image: nginx:1.21.3
     # image: fiitteam8/nginx_amplify:latest
-    container_name: nginx
-    restart: always
-    depends_on:
-      - flask_server
-      - mongo_express
-    volumes:
-      - ./data_link/nginx:/etc/nginx/conf.d
-      - ./data_link/certbot/conf:/etc/letsencrypt
-      - ./data_link/certbot/www:/var/www/certbot
-      - ./data_link/nginx-static:/usr/share/nginx/html
-      - ./data_link/nginx-auth/htpasswd:/etc/apache2/.htpasswd
+    #container_name: nginx
+    #restart: always
+    #depends_on:
+    #  - flask_server
+    #  - mongo_express
+    #volumes:
+    #  - ./data_link/nginx:/etc/nginx/conf.d
+    #  - ./data_link/certbot/conf:/etc/letsencrypt
+    #  - ./data_link/certbot/www:/var/www/certbot
+    #  - ./data_link/nginx-static:/usr/share/nginx/html
+    #  - ./data_link/nginx-auth/htpasswd:/etc/apache2/.htpasswd
     # reload nginx based on config
     # keep reloading nginx every 6h to acquire new ssl certificates
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    ports:
-      - 80:80
-      - 443:443
-    env_file:
-      - env/nginx_amplify.env
-    restart: unless-stopped
+    #command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    #ports:
+    #  - 80:80
+    #  - 443:443
+    #env_file:
+    #  - env/nginx_amplify.env
+    #restart: unless-stopped
 
-  mongo_express:
-    image: mongo-express
-    container_name: mongo_express
-    restart: always
-    ports:
-      - 8081:8081
-    env_file:
-      - env/mongo_express.env
+    #mongo_express:
+    #image: mongo-express
+    #container_name: mongo_express
+    #restart: always
+    #ports:
+    #  - 8081:8081
+    #env_file:
+    #  - env/mongo_express.env
  
   stats_server:
     image: fiitteam8/stats_server:latest
@@ -325,8 +325,8 @@ services:
       - env/flask.env
       - env/mongo_connection.env
       - env/elastic_connection.env
-    ports:
-      - 5000:5000
+    #ports:
+    #  - 5000:5000
     restart: unless-stopped
 
   system_metrics:
@@ -336,17 +336,17 @@ services:
       - env/system_metrics.env
       - env/mongo_connection.env
       - env/elastic_connection.env
-    ports:
-      - 5005:5005
+    #ports:
+    #  - 5005:5005
     restart: unless-stopped
 
-  frontend:
-    image: fiitteam8/frontend:latest
-    container_name: frontend
-    hostname: frontend
-    env_file:
-      - env/frontend.env
-    restart: unless-stopped
+    #frontend:
+    #image: fiitteam8/frontend:latest
+    #container_name: frontend
+    #hostname: frontend
+    #env_file:
+    #  - env/frontend.env
+    #restart: unless-stopped
 
   scraping_scheduler:
     image: fiitteam8/scraping_scheduler
@@ -358,8 +358,8 @@ services:
   documentation:
     container_name: documentation
     image: fiitteam8/ams_team_documentation:latest
-    ports:
-      - 9000:9000
+    #ports:
+    #  - 9000:9000
     restart: unless-stopped
 
 networks:
