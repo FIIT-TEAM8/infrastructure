@@ -267,8 +267,6 @@ services:
     - env/kibana.env
     restart: unless-stopped
     
-
-
   certbot:
     image: certbot/certbot
     volumes:
@@ -302,14 +300,15 @@ services:
     #  - env/nginx_amplify.env
     #restart: unless-stopped
 
-    #mongo_express:
-    #image: mongo-express
-    #container_name: mongo_express
-    #restart: always
-    #ports:
-    #  - 8081:8081
-    #env_file:
-    #  - env/mongo_express.env
+  mongo_express:
+   image: mongo-express
+   container_name: mongo_express
+   restart: unless-stopped
+   env_file:
+    - env/mongo_express.env
+   networks:
+    - mvp-infra-nginx
+    - default
  
   stats_server:
     image: fiitteam8/stats_server:latest
@@ -364,4 +363,6 @@ services:
 
 networks:
   default:
-      name: adversea
+    name: adversea
+  mvp-infra-nginx:
+    external: true
